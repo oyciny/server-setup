@@ -13,6 +13,9 @@
 ORANGE='\033[0;33m'
 NC='\033[0m'
 
+DEFAULT_USERNAME="sammy"
+DEFAULT_PASSWORD="password"
+
 function isRoot() {
     if [ "${EUID}" -ne 0 ]; then
         echo -e "${RED}You need to run this script as root!${NC}"
@@ -30,20 +33,28 @@ function installQuestions() {
     echo "I need to ask you a few questions before starting the setup."
     echo "If you are okay with the default options just hit enter."
 
-    until [[ -z ${REMOVE_UPON_COMPLETION} ]]; do
+    until [[ -z ${REMOVE_UPON_COMPLETION+true} ]]; do
         read -rp "First, would you like to remove the script after completion [Y/n]: " -i -n REMOVE_UPON_COMPLETION
         clear
     done
 
+    if [[ $REMOVE_UPON_COMPLETION == 'Y' || $REMOVE_UPON_COMPLETION == 'y' ]]; then
+        REMOVE_OPTION=true
+    elif [[ -z $REMOVE_UPON_COMPLETION ]]; then
+        REMOVE_OPTION=true
+    else
+        REMOVE_OPTION=false
+    fi
+
     # Get new user profile name
-    until [[ -z ${SERVER_USER_NAME} ]]; do
-        read -rp "What should we call your new user: " -e -i "sammy" SERVER_USER_NAME
+    until [[ -z "${SERVER_USER_NAME+${DEFAULT_USERNAME}}" ]]; do
+        read -rp "What should we call your new user:[${DEFAULT_USERNAME}]" -e -i SERVER_USER_NAME
         clear
     done
 
     # Get new user password
-    until [[ -z ${USER_PASSWORD} ]]; do
-        read -rp "What should we set the password for ${SERVER_USER_NAME} to: " -s -i -n USER_PASSWORD
+    until [[ -z "${USER_PASSWORD+${DEFAULT_PASSWORD}}" ]]; do
+        read -rp "What should ${SERVER_USER_NAME}'s be? [${DEFAULT_PASSWORD}] " -s -i -n USER_PASSWORD
         clear
     done
 
@@ -88,7 +99,7 @@ function serverSetup() {
         rsync --archive --chown=${SERVER_USER_NAME}:${SERVER_USER_NAME} ~/.ssh /home/${SERVER_USER_NAME}
     fi
 
-    if [[ ${REMOVE_UPON_COMPLETION} == true ]]; then
+    if [[ ${REMOVE_OPTION} == true ]]; then
         rm -- "$0"
     fi
 
