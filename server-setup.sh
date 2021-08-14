@@ -38,7 +38,7 @@ function installQuestions() {
 
     # Get new user password
     until [[ ${USER_PASSWORD} =~ ^[a-zA-Z0-9.]+$ ]]; do
-        read -rp -e "What should we set the password for ${SERVER_USER_NAME} to: " -e -i USER_PASSWORD
+        read -rp "What should we set the password for ${SERVER_USER_NAME} to: " -e -i USER_PASSWORD
     done
 
     # SSH Keys?
