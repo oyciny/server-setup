@@ -52,9 +52,6 @@ function installQuestions() {
         SSH_KEY_OPTION=false
     fi
 
-    echo $SSH_KEY_OPTION
-    exit 1
-
     echo "Okay that is all I needed to know! We are ready to do the initial setup of your server."
     echo "Once I have everything done you will be logged into your new user."
     read -n1 -r -p "Press any key to continue..."
