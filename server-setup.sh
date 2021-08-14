@@ -36,13 +36,8 @@ function installQuestions() {
         read -rp "What should we call your new user: " -e -i "sammy" SERVER_USER_NAME
     done
 
-    # Get new user password
-    until [[ ${USER_PASSWORD} =~ ^[a-zA-Z0-9.]+$ ]]; do
-        read -rp "What should we set the password for ${SERVER_USER_NAME} to: " -e -i USER_PASSWORD
-    done
-
     # SSH Keys?
-    read -rp "Are you currently using a SSH Key to log into this server? [Y/n]: " -e -i -n SSH_KEYS
+    read -rp "Are you currently using a SSH Key to log into this server? [Y/n]: " -i -n SSH_KEYS
     if [[ $SSH_KEYS == 'Y' || $SSH_KEYS == 'y' ]]; then
         SSH_KEY_OPTION=true
     else
@@ -57,6 +52,16 @@ function installQuestions() {
 function serverSetup() {
     # Gather details from user
     installQuestions
+    
+    # Create User
+    adduser -m --gecos '' ${SERVER_USER_NAME}
+
+    # Make user sudo user
+    chmod -aG sudo ${SERVER_USER_NAME}
+
+    # Change to user
+    su ${SERVER_USER_NAME}
+
 }
 
 initialCheck
