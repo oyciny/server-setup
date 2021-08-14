@@ -61,7 +61,6 @@ function serverSetup() {
     installQuestions
     
     # Create User
-    #adduser --gecos '' ${SERVER_USER_NAME}
     useradd -m -s /usr/bin/bash ${SERVER_USER_NAME}
     echo "${SERVER_USER_NAME}:${USER_PASSWORD}" | chpasswd
 
