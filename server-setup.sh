@@ -10,8 +10,8 @@
 # Then run the following command to run the setup and you're
 # done! Hope you enjoy.
 
-ORANGE="\033[0;33m"
-RED="\033[0;31m"
+ORANGE='\033[0;33m'
+RED='\033[0;31m'
 
 function isRoot() {
     if [ "${EUID}" -ne 0 ]; then
