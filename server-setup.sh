@@ -42,12 +42,18 @@ function installQuestions() {
     done
 
     # SSH Keys?
-    read -rp "Are you currently using a SSH Key to log into this server? [Y/n]: " -i -n SSH_KEYS
+    until [[ ${SSH_KEYS} =~ ^(?:Y|N)$ || ${SSH_KEYS} =~ ^(?:y|n)$ ]]; do
+        read -rp "Are you currently using a SSH Key to log into this server? [Y/n]: " -i -n SSH_KEYS
+    done
+    
     if [[ $SSH_KEYS == 'Y' || $SSH_KEYS == 'y' ]]; then
         SSH_KEY_OPTION=true
     else
         SSH_KEY_OPTION=false
     fi
+
+    echo $SSH_KEY_OPTION
+    exit 1
 
     echo "Okay that is all I needed to know! We are ready to do the initial setup of your server."
     echo "Once I have everything done you will be logged into your new user."
@@ -60,15 +66,20 @@ function serverSetup() {
     
     # Create User
     #adduser --gecos '' ${SERVER_USER_NAME}
-    useradd -m -s /usr/bin/zsh ${SERVER_USER_NAME}
+    useradd -m -s /usr/bin/bash ${SERVER_USER_NAME}
     echo "${SERVER_USER_NAME}:${USER_PASSWORD}" | chpasswd
 
 
     # Make user sudo user
     usermod -aG sudo ${SERVER_USER_NAME}
 
-    # Switch to user
-    su ${SERVER_USER_NAME}
+    # Setup Basic Firewall
+    ufw allow OpenSSH
+    echo "y" | ufw enable
+
+    if [[ ${SSH_KEY_OPTION} == true ]]; then
+        rsync --archive --chown=${SERVER_USER_NAME}:${SERVER_USER_NAME} ~/.ssh /home/${SERVER_USER_NAME}
+    fi
 
 }
 
