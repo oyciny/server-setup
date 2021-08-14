@@ -34,7 +34,7 @@ function installQuestions() {
     echo "If you are okay with the default options just hit enter."
 
     until [[ ${REMOVE_OPTION} == true || ${REMOVE_OPTION} == false ]]; do
-        read -rp "First, would you like to remove the script after completion [Y/n]: " -i -n REMOVE_UPON_COMPLETION
+        read -rp "First, would you like to remove the script after completion [Y/n]: " -i -n1 REMOVE_UPON_COMPLETION
         if [[ $REMOVE_UPON_COMPLETION == 'Y' || $REMOVE_UPON_COMPLETION == 'y' ]]; then
             REMOVE_OPTION=true
         elif [[ -z $REMOVE_UPON_COMPLETION ]]; then
@@ -47,21 +47,21 @@ function installQuestions() {
 
     # Get new user profile name
     until [[ ${SERVER_USER_NAME} =~ ^[a-zA-Z0-9_]+$ ]]; do
-        read -rp "What should we call your new user ['${DEFAULT_USERNAME}']: " -e -i -n SERVER_USER_NAME
+        read -rp "What should we call your new user ['${DEFAULT_USERNAME}']: " -e -i SERVER_USER_NAME
         clear
     done
 
     # Get new user password
     until [[ ${USER_PASSWORD} =~ ^([a-zA-Z].*)+$ ]]; do
         echo "Password must start with any character a-z upper or lowercase!"
-        read -rp "What should ${SERVER_USER_NAME}'s be? ['${DEFAULT_PASSWORD}']: " -s -i -n USER_PASSWORD
+        read -rp "What should ${SERVER_USER_NAME}'s be? ['${DEFAULT_PASSWORD}']: " -s -i USER_PASSWORD
         clear
     done
 
     echo " "
 
     # SSH Keys?
-    read -rp "Are you currently using a SSH Key to log into this server? [Y/n]: " -i -n SSH_KEYS
+    read -rp "Are you currently using a SSH Key to log into this server? [Y/n]: " -i -n1 SSH_KEYS
     clear
     
     if [[ $SSH_KEYS == 'Y' || $SSH_KEYS == 'y' ]]; then
