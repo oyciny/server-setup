@@ -60,7 +60,7 @@ function serverSetup() {
     
     # Create User
     #adduser --gecos '' ${SERVER_USER_NAME}
-    useradd -m -p $(perl -e "print crypt(${USER_PASSWORD}, 'password')" ${SERVER_USER_NAME})
+    useradd -m -p $(perl -e "print crypt($ARGV[0], 'password')" ${USER_PASSWORD}) ${SERVER_USER_NAME}
 
 
     # Make user sudo user
