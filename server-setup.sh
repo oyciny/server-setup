@@ -30,6 +30,11 @@ function installQuestions() {
     echo "I need to ask you a few questions before starting the setup."
     echo "If you are okay with the default options just hit enter."
 
+    until [[ -z ${REMOVE_UPON_COMPLETION} ]]; do
+        read -rp "First, would you like to remove the script after completion [Y/n]: " -i -n REMOVE_UPON_COMPLETION
+        clear
+    done
+
     # Get new user profile name
     until [[ -z ${SERVER_USER_NAME} ]]; do
         read -rp "What should we call your new user: " -e -i "sammy" SERVER_USER_NAME
@@ -81,6 +86,10 @@ function serverSetup() {
 
     if [[ ${SSH_KEY_OPTION} == true ]]; then
         rsync --archive --chown=${SERVER_USER_NAME}:${SERVER_USER_NAME} ~/.ssh /home/${SERVER_USER_NAME}
+    fi
+
+    if [[ ${REMOVE_UPON_COMPLETION} == true ]]; then
+        rm -- "$0"
     fi
 
     clear
