@@ -42,27 +42,26 @@ function installQuestions() {
         else
             REMOVE_OPTION=false
         fi
-        clear
     done
 
     # Get new user profile name
     until [[ ${SERVER_USER_NAME} =~ ^[a-zA-Z0-9_]+$ ]]; do
-        read -rp "What should we call your new user ['${DEFAULT_USERNAME}']: " -e -i SERVER_USER_NAME
         clear
+        read -rp "What should we call your new user ['${DEFAULT_USERNAME}']: " -e -i SERVER_USER_NAME
     done
 
     # Get new user password
     until [[ ${USER_PASSWORD} =~ ^([a-zA-Z].*)+$ ]]; do
+        clear
         echo "Password must start with any character a-z upper or lowercase!"
         read -rp "What should ${SERVER_USER_NAME}'s be? ['${DEFAULT_PASSWORD}']: " -s -i USER_PASSWORD
-        clear
     done
 
     echo " "
 
     # SSH Keys?
-    read -rp "Are you currently using a SSH Key to log into this server? [Y/n]: " -i -n1 SSH_KEYS
     clear
+    read -rp "Are you currently using a SSH Key to log into this server? [Y/n]: " -i -n1 SSH_KEYS
     
     if [[ $SSH_KEYS == 'Y' || $SSH_KEYS == 'y' ]]; then
         SSH_KEY_OPTION=true
@@ -71,6 +70,8 @@ function installQuestions() {
     else
         SSH_KEY_OPTION=false
     fi
+
+    clear
 
     echo "Okay that is all I needed to know! We are ready to do the initial setup of your server."
     echo "Once I have everything done you will be logged into your new user."
