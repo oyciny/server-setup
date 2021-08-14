@@ -33,27 +33,26 @@ function installQuestions() {
     echo "I need to ask you a few questions before starting the setup."
     echo "If you are okay with the default options just hit enter."
 
-    until [[ -z ${REMOVE_UPON_COMPLETION+true} ]]; do
+    until [[ ${REMOVE_OPTION} == true || ${REMOVE_OPTION} == false ]]; do
         read -rp "First, would you like to remove the script after completion [Y/n]: " -i -n REMOVE_UPON_COMPLETION
+        if [[ $REMOVE_UPON_COMPLETION == 'Y' || $REMOVE_UPON_COMPLETION == 'y' ]]; then
+            REMOVE_OPTION=true
+        elif [[ -z $REMOVE_UPON_COMPLETION ]]; then
+            REMOVE_OPTION=true
+        else
+            REMOVE_OPTION=false
+        fi
         clear
     done
 
-    if [[ $REMOVE_UPON_COMPLETION == 'Y' || $REMOVE_UPON_COMPLETION == 'y' ]]; then
-        REMOVE_OPTION=true
-    elif [[ -z $REMOVE_UPON_COMPLETION ]]; then
-        REMOVE_OPTION=true
-    else
-        REMOVE_OPTION=false
-    fi
-
     # Get new user profile name
-    until [[ -z "${SERVER_USER_NAME+${DEFAULT_USERNAME}}" ]]; do
+    until [[ ${SERVER_USER_NAME} =~ ^[a-zA-Z0-9_-]$ ]]; do
         read -rp "What should we call your new user:[${DEFAULT_USERNAME}]" -e -i SERVER_USER_NAME
         clear
     done
 
     # Get new user password
-    until [[ -z "${USER_PASSWORD+${DEFAULT_PASSWORD}}" ]]; do
+    until [[ ${USER_PASSWORD} =~ ^[.*]$]]; do
         read -rp "What should ${SERVER_USER_NAME}'s be? [${DEFAULT_PASSWORD}] " -s -i -n USER_PASSWORD
         clear
     done
