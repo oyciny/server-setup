@@ -41,10 +41,10 @@ function installQuestions() {
         read -rp "What should we set the password for ${SERVER_USER_NAME} to: " -s -i -n USER_PASSWORD
     done
 
+    echo " "
+
     # SSH Keys?
-    until [[ ${SSH_KEYS} =~ ^(?:Y|N)$ || ${SSH_KEYS} =~ ^(?:y|n)$ ]]; do
-        read -rp "Are you currently using a SSH Key to log into this server? [Y/n]: " -i -n SSH_KEYS
-    done
+    read -rp "Are you currently using a SSH Key to log into this server? [Y/n]: " -i -n SSH_KEYS
     
     if [[ $SSH_KEYS == 'Y' || $SSH_KEYS == 'y' ]]; then
         SSH_KEY_OPTION=true
