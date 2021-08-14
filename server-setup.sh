@@ -77,6 +77,10 @@ function serverSetup() {
         rsync --archive --chown=${SERVER_USER_NAME}:${SERVER_USER_NAME} ~/.ssh /home/${SERVER_USER_NAME}
     fi
 
+    su ${SERVER_USER_NAME}
+
+    clear
+
 }
 
 initialCheck
