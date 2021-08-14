@@ -52,7 +52,7 @@ function installQuestions() {
     done
 
     # Get new user password
-    until [[ ${USER_PASSWORD} =~ ^[.*]$]]; do
+    until [[ ${USER_PASSWORD} =~ ^[.*]$ ]]; do
         read -rp "What should ${SERVER_USER_NAME}'s be? [${DEFAULT_PASSWORD}] " -s -i -n USER_PASSWORD
         clear
     done
