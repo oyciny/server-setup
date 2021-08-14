@@ -47,7 +47,7 @@ function installQuestions() {
 
     # Get new user profile name
     until [[ ${SERVER_USER_NAME} =~ ^[a-zA-Z0-9_-]$ ]]; do
-        read -rp "What should we call your new user:[${DEFAULT_USERNAME}]" -e -i SERVER_USER_NAME
+        read -rp "What should we call your new user:[${DEFAULT_USERNAME}] " -e -i -n SERVER_USER_NAME
         clear
     done
 
