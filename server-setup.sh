@@ -31,21 +31,26 @@ function installQuestions() {
     echo "If you are okay with the default options just hit enter."
 
     # Get new user profile name
-    until [[ ${SERVER_USER_NAME} =~ ^[a-zA-Z0-9.]+$ ]]; do
+    until [[ -z ${SERVER_USER_NAME} ]]; do
         read -rp "What should we call your new user: " -e -i "sammy" SERVER_USER_NAME
+        clear
     done
 
     # Get new user password
-    until [[ ${USER_PASSWORD} =~ ^[a-zA-Z0-9.]+$ ]]; do
+    until [[ -z ${USER_PASSWORD} ]]; do
         read -rp "What should we set the password for ${SERVER_USER_NAME} to: " -s -i -n USER_PASSWORD
+        clear
     done
 
     echo " "
 
     # SSH Keys?
     read -rp "Are you currently using a SSH Key to log into this server? [Y/n]: " -i -n SSH_KEYS
+    clear
     
     if [[ $SSH_KEYS == 'Y' || $SSH_KEYS == 'y' ]]; then
+        SSH_KEY_OPTION=true
+    elif [[ -z $SSH_KEYS ]]; then
         SSH_KEY_OPTION=true
     else
         SSH_KEY_OPTION=false
@@ -59,6 +64,8 @@ function installQuestions() {
 function serverSetup() {
     # Gather details from user
     installQuestions
+
+    clear
     
     # Create User
     useradd -m -s /usr/bin/bash ${SERVER_USER_NAME}
@@ -76,9 +83,9 @@ function serverSetup() {
         rsync --archive --chown=${SERVER_USER_NAME}:${SERVER_USER_NAME} ~/.ssh /home/${SERVER_USER_NAME}
     fi
 
-    su ${SERVER_USER_NAME}
-
     clear
+
+    su ${SERVER_USER_NAME}
 
 }
 
