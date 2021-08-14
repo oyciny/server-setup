@@ -12,6 +12,7 @@
 
 ORANGE='\033[0;33m'
 RED='\033[0;31m'
+NC='\033[0m'
 
 function isRoot() {
     if [ "${EUID}" -ne 0 ]; then
@@ -25,19 +26,19 @@ function initialCheck() {
 }
 
 function installQuestions() {
-    echo "${ORANGE}Welcome to the Initial Server Setup Script!${NC}"
+    echo "${ORANGE} Welcome to the Initial Server Setup Script!${NC}"
     echo ""
     echo "I need to ask you a few questions before starting the setup."
     echo "If you are okay with the default options just hit enter."
 
     # Get new user profile name
     until [[ ${SERVER_USER_NAME} =~ ^[a-zA-Z0-9.]+$ ]]; do
-        read -rp "${ORANGE}What should we call your new user:${NC} " -e -i "sammy" SERVER_USER_NAME
+        read -rp "${ORANGE} What should we call your new user:${NC} " -e -i "sammy" SERVER_USER_NAME
     done
 
     # Get new user password
     until [[ ${USER_PASSWORD} =~ ^[a-zA-Z0-9.]+$ ]]; do
-        read -rp "${ORANGE}What should we set the password for${NC} ${SERVER_USER_NAME} ${ORANGE}to:${NC} " -e -i USER_PASSWORD
+        read -rp "${ORANGE} What should we set the password for${NC} ${SERVER_USER_NAME} ${ORANGE}to:${NC} " -e -i USER_PASSWORD
     done
 
     # SSH Keys?
