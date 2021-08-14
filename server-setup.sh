@@ -36,6 +36,11 @@ function installQuestions() {
         read -rp "What should we call your new user: " -e -i "sammy" SERVER_USER_NAME
     done
 
+    # Get new user password
+    until [[ ${USER_PASSWORD} =~ ^[a-zA-Z0-9.]+$ ]]; do
+        read -rp "What should we set the password for ${SERVER_USER_NAME} to: " -s -i -n USER_PASSWORD
+    done
+
     # SSH Keys?
     read -rp "Are you currently using a SSH Key to log into this server? [Y/n]: " -i -n SSH_KEYS
     if [[ $SSH_KEYS == 'Y' || $SSH_KEYS == 'y' ]]; then
@@ -54,12 +59,14 @@ function serverSetup() {
     installQuestions
     
     # Create User
-    adduser -m --gecos '' ${SERVER_USER_NAME}
+    #adduser --gecos '' ${SERVER_USER_NAME}
+    useradd -m -p $(perl -e "print crypt($ARGV[0], 'password')", ${USER_PASSWORD})
+
 
     # Make user sudo user
-    chmod -aG sudo ${SERVER_USER_NAME}
+    usermod -aG sudo ${SERVER_USER_NAME}
 
-    # Change to user
+    # Switch to user
     su ${SERVER_USER_NAME}
 
 }
