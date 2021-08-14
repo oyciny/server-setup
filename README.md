@@ -14,7 +14,7 @@ chmod +x server-setup.sh
 This will download the script to your server and run it for you.
 
 #### Known Issues
-* [!] Currently the project is in a broken state. I am working to get it fixed but I am not familiar with shell files and their syntax.
+:exclamation: Currently the project is in a broken state. I am working to get it fixed but I am not familiar with shell files and their syntax.
 
 ## Planned Features
  - Nginx Setup
