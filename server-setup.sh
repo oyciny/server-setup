@@ -33,16 +33,16 @@ function installQuestions() {
 
     # Get new user profile name
     until [[ ${SERVER_USER_NAME} =~ ^[a-zA-Z0-9.]+$ ]]; do
-        read -rp "What should we call your new user:${NC} " -e -i "sammy" SERVER_USER_NAME
+        read -rp "What should we call your new user: " -e -i "sammy" SERVER_USER_NAME
     done
 
     # Get new user password
     until [[ ${USER_PASSWORD} =~ ^[a-zA-Z0-9.]+$ ]]; do
-        read -rp -e "What should we set the password for${NC} ${SERVER_USER_NAME} ${ORANGE}to:${NC} " -e -i USER_PASSWORD
+        read -rp -e "What should we set the password for ${SERVER_USER_NAME} to: " -e -i USER_PASSWORD
     done
 
     # SSH Keys?
-    read -rp "Are you currently using a SSH Key to log into this server?${NC} [Y/n]: " -e -i -n SSH_KEYS
+    read -rp "Are you currently using a SSH Key to log into this server? [Y/n]: " -e -i -n SSH_KEYS
     if [[ $SSH_KEYS == 'Y' || $SSH_KEYS == 'y' ]]; then
         SSH_KEY_OPTION=true
     else
