@@ -54,7 +54,7 @@ function installQuestions() {
     until [[ ${USER_PASSWORD} =~ ^([a-zA-Z].*)+$ ]]; do
         clear
         echo "Password must start with any character a-z upper or lowercase!"
-        read -rp "What should ${SERVER_USER_NAME}'s be? ['${DEFAULT_PASSWORD}']: " -s -i USER_PASSWORD
+        read -rp "What should ${SERVER_USER_NAME}\'s be? ['${DEFAULT_PASSWORD}']: " -s -i USER_PASSWORD
     done
 
     echo " "
