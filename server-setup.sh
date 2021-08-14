@@ -46,22 +46,22 @@ function installQuestions() {
     done
 
     # Get new user profile name
-    until [[ ${SERVER_USER_NAME} =~ ^[a-zA-Z0-9]+$ ]]; do
-        read -rp "What should we call your new user [${DEFAULT_USERNAME}]: " -e -i
+    until [[ ${SERVER_USER_NAME} =~ ^[a-zA-Z0-9_]+$ ]]; do
+        read -rp "What should we call your new user [${DEFAULT_USERNAME}]: " -e -i SERVER_USER_NAME
         clear
     done
 
     # Get new user password
     until [[ ${USER_PASSWORD} =~ ^([a-zA-Z].*)+$ ]]; do
         echo "Password must start with any character a-z upper or lowercase!"
-        read -rp "What should ${SERVER_USER_NAME}'s be? [${DEFAULT_PASSWORD}]: " -s -i -n
+        read -rp "What should ${SERVER_USER_NAME}'s be? [${DEFAULT_PASSWORD}]: " -s -i USER_PASSWORD
         clear
     done
 
     echo " "
 
     # SSH Keys?
-    read -rp "Are you currently using a SSH Key to log into this server? [Y/n]: " -i -n
+    read -rp "Are you currently using a SSH Key to log into this server? [Y/n]: " -i -n SSH_KEYS
     clear
     
     if [[ $SSH_KEYS == 'Y' || $SSH_KEYS == 'y' ]]; then
