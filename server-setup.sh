@@ -45,19 +45,20 @@ function installQuestions() {
     done
 
     # Get new user profile name
-    until [[ ${SERVER_USER_NAME} =~ ^[a-zA-Z0-9.*]+$ ]]; do
-        clear
-        read -rp "What should we call your new user [${DEFAULT_USERNAME}]: " -i SERVER_USER_NAME
-    done
+    # until [[ ${SERVER_USERNAME} =~ ^[a-zA-Z0-9_]+$ ]]; do
+    #    clear
+    #    read -rp "What should we call your new user [${DEFAULT_USERNAME}]: " -i SERVER_USERNAME
+    # done
+    read -rp "What should we call your new user [${DEFAULT_USERNAME}]: " -i DEFAULT_USERNAME
 
     # Get new user password
-    until [[ ${USER_PASSWORD} =~ ^([a-zA-Z].*)+$ ]]; do
-        clear
-        echo "Password must start with any character a-z upper or lowercase!"
-        read -rp "What should ${SERVER_USER_NAME}\'s be? [${DEFAULT_PASSWORD}]: " -s -i USER_PASSWORD
-    done
+    # until [[ ${USER_PASSWORD} =~ ^([a-zA-Z].*)+$ ]]; do
+    #    clear
+    #    echo "Password must start with any character a-z upper or lowercase!"
+    #    read -rp "What should ${SERVER_USER_NAME}\'s be? [${DEFAULT_PASSWORD}]: " -s -i USER_PASSWORD
+    # done
 
-    echo " "
+    read -rp "What should ${DEFAULT_USERNAME}\'s password be? [${DEFAULT_PASSWORD}] " -s -i DEFAULT_PASSWORD
 
     # SSH Keys?
     clear
@@ -86,18 +87,18 @@ function serverSetup() {
     
     # Create User
     useradd -m -s /usr/bin/bash ${SERVER_USER_NAME}
-    echo "${SERVER_USER_NAME}:${USER_PASSWORD}" | chpasswd
+    echo "${DEFAULT_USERNAME}:${DEFAULT_PASSWORD}" | chpasswd
 
 
     # Make user sudo user
-    usermod -aG sudo ${SERVER_USER_NAME}
+    usermod -aG sudo ${DEFAULT_USERNAME}
 
     # Setup Basic Firewall
     ufw allow OpenSSH
     echo "y" | ufw enable
 
     if [[ ${SSH_KEY_OPTION} == true ]]; then
-        rsync --archive --chown=${SERVER_USER_NAME}:${SERVER_USER_NAME} ~/.ssh /home/${SERVER_USER_NAME}
+        rsync --archive --chown=${DEFAULT_USERNAME}:${DEFAULT_USERNAME} ~/.ssh /home/${DEFAULT_USERNAME}
     fi
 
     if [[ ${REMOVE_OPTION} == true ]]; then
@@ -106,7 +107,7 @@ function serverSetup() {
 
     clear
 
-    su ${SERVER_USER_NAME}
+    su ${DEFAULT_USERNAME}
 
 }
 
