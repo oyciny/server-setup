@@ -88,7 +88,7 @@ function serverSetup() {
     clear
     
     # Create User
-    useradd -m -s /bin/bash ${SERVER_USER_NAME}
+    useradd -m -s /bin/bash ${DEFAULT_USERNAME}
     echo "${DEFAULT_USERNAME}:${DEFAULT_PASSWORD}" | chpasswd
 
 
