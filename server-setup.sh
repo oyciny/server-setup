@@ -49,6 +49,7 @@ function installQuestions() {
     #    clear
     #    read -rp "What should we call your new user [${DEFAULT_USERNAME}]: " -i SERVER_USERNAME
     # done
+    clear
     read -rp "What should we call your new user [${DEFAULT_USERNAME}]: " -i DEFAULT_USERNAME
 
     # Get new user password
@@ -57,8 +58,8 @@ function installQuestions() {
     #    echo "Password must start with any character a-z upper or lowercase!"
     #    read -rp "What should ${SERVER_USER_NAME}\'s be? [${DEFAULT_PASSWORD}]: " -s -i USER_PASSWORD
     # done
-
-    read -rp "What should ${DEFAULT_USERNAME}\'s password be? [${DEFAULT_PASSWORD}] " -s -i DEFAULT_PASSWORD
+    clear
+    read -rp "What should ${DEFAULT_USERNAME}\'s password be? [${DEFAULT_PASSWORD}]: " -s -i DEFAULT_PASSWORD
 
     # SSH Keys?
     clear
@@ -82,6 +83,10 @@ function installQuestions() {
 function serverSetup() {
     # Gather details from user
     installQuestions
+
+    echo "${DEFAULT_USERNAME}, ${DEFAULT_PASSWORD}"
+
+    exit 1
 
     clear
     
