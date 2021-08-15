@@ -28,6 +28,7 @@ function initialCheck() {
 }
 
 function installQuestions() {
+    clear
     echo -e "${ORANGE} Welcome to the Initial Server Setup Script!${NC}"
     echo ""
     echo "I need to ask you a few questions before starting the setup."
@@ -59,7 +60,7 @@ function installQuestions() {
     #    read -rp "What should ${SERVER_USER_NAME}\'s be? [${DEFAULT_PASSWORD}]: " -s -i USER_PASSWORD
     # done
     clear
-    read -rp "What should ${DEFAULT_USERNAME}\'s password be? [${DEFAULT_PASSWORD}]: " -s -i DEFAULT_PASSWORD
+    read -rp "What should ${DEFAULT_USERNAME}'s password be? [${DEFAULT_PASSWORD}]: " -s -i DEFAULT_PASSWORD
 
     # SSH Keys?
     clear
