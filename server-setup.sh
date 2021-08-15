@@ -85,10 +85,6 @@ function serverSetup() {
     # Gather details from user
     installQuestions
 
-    echo "${DEFAULT_USERNAME}, ${DEFAULT_PASSWORD}"
-
-    exit 1
-
     clear
     
     # Create User
